@@ -14,7 +14,8 @@ mod atoms {
 rustler::rustler_export_nifs! {
     "Elixir.NifExample",
     [
-        ("add", 2, add)
+        ("add", 2, add),
+        ("inplace_sort", 1, inplace_sort),
     ],
     None
 }
@@ -24,4 +25,9 @@ fn add<'a>(env: Env<'a>, args: &[Term<'a>]) -> Result<Term<'a>, Error> {
     let num2: i64 = args[1].decode()?;
 
     Ok((atoms::ok(), num1 + num2).encode(env))
+}
+
+fn inplace_sort<'a>(env: Env<'a>, args: &[Term<'a>]) -> Result<Term<'a>, Error> {
+    let list: Vec<Term<'a>> = args[0].decode()?;
+    Ok(atoms::ok().encode(env))
 }
